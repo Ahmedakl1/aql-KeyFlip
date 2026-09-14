@@ -73,8 +73,8 @@ jobs:
             exit 1
           }
 
-          Write-Host "Inno Setup found:"
-          & $iscc /?
+          Write-Host "Inno Setup found successfully:"
+          Write-Host $iscc
 
       - name: Build Installer
         shell: pwsh
@@ -87,6 +87,7 @@ jobs:
             exit 1
           }
 
+          Write-Host "Compiling installer..."
           & $iscc $iss
 
           if ($LASTEXITCODE -ne 0) {
