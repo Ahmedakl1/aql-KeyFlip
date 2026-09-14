@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -20,10 +21,16 @@ jobs:
           dotnet-version: "10.0.x"
 
       - name: Restore
-        run: dotnet restore "aql.KeyFlip-v3.1.3-PRO-Installer-Package/native/aql.KeyFlip.sln"
+        run: >
+          dotnet restore
+          "aql.KeyFlip-v3.1.3-PRO-Installer-Package/native/aql.KeyFlip.sln"
 
       - name: Test
-        run: dotnet test "aql.KeyFlip-v3.1.3-PRO-Installer-Package/native/aql.KeyFlip.sln" --configuration Release --no-restore
+        run: >
+          dotnet test
+          "aql.KeyFlip-v3.1.3-PRO-Installer-Package/native/aql.KeyFlip.sln"
+          --configuration Release
+          --no-restore
 
       - name: Publish Windows x64
         run: >
@@ -42,30 +49,81 @@ jobs:
         shell: pwsh
         run: |
           $exe = "aql.KeyFlip-v3.1.3-PRO-Installer-Package/native/build/publish/aql.KeyFlip.exe"
+
           if (!(Test-Path $exe)) {
             Write-Error "aql.KeyFlip.exe was not created."
+            exit 1
           }
+
           Write-Host "EXE created successfully:"
           Get-Item $exe | Format-List FullName,Length
 
       - name: Install Inno Setup
         shell: pwsh
-        run: choco install innosetup --no-progress -y
+        run: |
+          choco install innosetup --no-progress -y
+
+      - name: Verify Inno Setup
+        shell: pwsh
+        run: |
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+
+          if (!(Test-Path $iscc)) {
+            Write-Error "Inno Setup compiler was not found."
+            exit 1
+          }
+
+          Write-Host "Inno Setup found:"
+          & $iscc /?
 
       - name: Build Installer
         shell: pwsh
         run: |
           $iss = "aql.KeyFlip-v3.1.3-PRO-Installer-Package/native/build/installer-setup.iss"
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" $iss
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+
+          if (!(Test-Path $iss)) {
+            Write-Error "Installer script was not found: $iss"
+            exit 1
+          }
+
+          & $iscc $iss
+
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Inno Setup compilation failed."
+            exit $LASTEXITCODE
+          }
+
+      - name: Verify Installer
+        shell: pwsh
+        run: |
+          $installerDir = "aql.KeyFlip-v3.1.3-PRO-Installer-Package/native/dist-installer"
+
+          if (!(Test-Path $installerDir)) {
+            Write-Error "Installer output directory was not created."
+            exit 1
+          }
+
+          $installer = Get-ChildItem $installerDir -Filter "*.exe" | Select-Object -First 1
+
+          if ($null -eq $installer) {
+            Write-Error "Installer EXE was not created."
+            exit 1
+          }
+
+          Write-Host "Installer created successfully:"
+          Get-Item $installer.FullName | Format-List FullName,Length
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
           name: aql.KeyFlip-v3.1.3-win-x64
           path: aql.KeyFlip-v3.1.3-PRO-Installer-Package/native/build/publish/aql.KeyFlip.exe
+          if-no-files-found: error
 
       - name: Upload Installer
         uses: actions/upload-artifact@v4
         with:
           name: aql.KeyFlip-v3.1.3-installer
-          path: aql.KeyFlip-v3.1.3-PRO-Installer-Package/native/build/*.exe
+          path: aql.KeyFlip-v3.1.3-PRO-Installer-Package/native/dist-installer/*.exe
+          if-no-files-found: error
