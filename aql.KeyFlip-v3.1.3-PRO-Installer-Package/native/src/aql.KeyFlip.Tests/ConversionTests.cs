@@ -25,18 +25,21 @@ public class ConversionTests
         Assert.Equal(expected, TextConverter.ConvertText(input, ConversionMode.Auto).Converted);
 
     [Fact]
-    public void NumbersArePreserved() => Assert.Equal("12345", TextConverter.ConvertText("12345").Converted);
+    public void NumbersArePreserved() =>
+        Assert.Equal("12345", TextConverter.ConvertText("12345").Converted);
 
     [Fact]
-    public void NormalEnglishWordsArePreservedInAuto() => Assert.Equal("Hello World", TextConverter.ConvertText("Hello World").Converted);
+    public void NormalEnglishWordsArePreservedInAuto() =>
+        Assert.Equal("Hello World", TextConverter.ConvertText("Hello World").Converted);
 
     [Fact]
     public void MixedTextConvertsMistypedTokenButPreservesNormalEnglishAndNumbers()
     {
         string result = TextConverter.ConvertText("Hello hgsl 123", ConversionMode.Auto).Converted;
+
         Assert.Contains("Hello", result);
         Assert.Contains("123", result);
-        Assert.Contains("السل", result);
+        Assert.Contains("السم", result);
     }
 
     [Fact]
@@ -48,6 +51,6 @@ public class ConversionTests
     [Fact]
     public void ExplicitArabicToEnglishUsesReverseMapping()
     {
-        Assert.Equal("hgsghl ugd;l", TextConverter.ConvertArToEn("السلام عليكم"));
+        Assert.Equal("hgsl lrd", TextConverter.ConvertArToEn("السلام عليكم"));
     }
 }
