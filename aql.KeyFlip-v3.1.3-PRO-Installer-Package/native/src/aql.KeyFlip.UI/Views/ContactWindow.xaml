@@ -1,0 +1,111 @@
+<Window x:Class="aql.KeyFlip.UI.Views.ContactWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Contact Us - aql.KeyFlip"
+        Height="360" Width="360"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="{StaticResource BackgroundBrush}"
+        WindowStyle="SingleBorderWindow">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,16">
+            <TextBlock Text="Contact Us" 
+                       FontSize="18" 
+                       FontWeight="Bold" 
+                       Foreground="{StaticResource TextPrimaryBrush}" 
+                       HorizontalAlignment="Center"/>
+            <TextBlock Text="Eng. Ahmed Salah Aql" 
+                       FontSize="12" 
+                       Foreground="{StaticResource PrimarySkyBrush}" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,2,0,0"/>
+            <TextBlock Text="AQL • Building Ideas Into Software" 
+                       FontSize="10" 
+                       Foreground="{StaticResource TextMutedBrush}" 
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Details Card -->
+        <Border Grid.Row="1" 
+                Background="{StaticResource CardBackgroundBrush}" 
+                BorderBrush="{StaticResource BorderBrush}" 
+                BorderThickness="1" 
+                CornerRadius="8" 
+                Padding="14,12"
+                Margin="0,0,0,14">
+            <StackPanel>
+                <DockPanel Margin="0,0,0,10">
+                    <TextBlock Text="Email:" Foreground="{StaticResource TextMutedBrush}" FontSize="11"/>
+                    <TextBox Text="info@ahmedaql.online" 
+                             IsReadOnly="True" 
+                             Background="Transparent" 
+                             BorderThickness="0" 
+                             Foreground="{StaticResource TextPrimaryBrush}" 
+                             FontFamily="Consolas" 
+                             FontSize="11" 
+                             DockPanel.Dock="Right" 
+                             HorizontalAlignment="Right"/>
+                </DockPanel>
+
+                <DockPanel Margin="0,0,0,14">
+                    <TextBlock Text="WhatsApp:" Foreground="{StaticResource TextMutedBrush}" FontSize="11"/>
+                    <TextBox Text="01098486663" 
+                             IsReadOnly="True" 
+                             Background="Transparent" 
+                             BorderThickness="0" 
+                             Foreground="{StaticResource TextPrimaryBrush}" 
+                             FontFamily="Consolas" 
+                             FontSize="11" 
+                             DockPanel.Dock="Right" 
+                             HorizontalAlignment="Right"/>
+                </DockPanel>
+
+                <Grid Margin="0,6,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Send Email Button -->
+                    <Button Grid.Column="0" 
+                            Click="OnSendEmailClick" 
+                            Background="{StaticResource PrimarySkyBrush}" 
+                            BorderBrush="{StaticResource PrimarySkyHoverBrush}" 
+                            Foreground="White" 
+                            FontWeight="SemiBold"
+                            FontSize="11">
+                        Send Email
+                    </Button>
+
+                    <!-- Contact WhatsApp Button -->
+                    <Button Grid.Column="2" 
+                            Click="OnWhatsAppClick" 
+                            Background="#059669" 
+                            BorderBrush="#047857" 
+                            Foreground="White" 
+                            FontWeight="SemiBold"
+                            FontSize="11">
+                        WhatsApp
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Close Button -->
+        <Button Grid.Row="2" 
+                Click="OnCloseClick" 
+                HorizontalAlignment="Center" 
+                Width="100" 
+                FontWeight="SemiBold">
+            Close
+        </Button>
+    </Grid>
+</Window>

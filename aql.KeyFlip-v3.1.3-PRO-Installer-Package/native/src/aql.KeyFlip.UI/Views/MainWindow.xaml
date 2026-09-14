@@ -1,0 +1,157 @@
+<Window x:Class="aql.KeyFlip.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="aql.KeyFlip"
+        Height="310" Width="360"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="{StaticResource BackgroundBrush}"
+        WindowStyle="SingleBorderWindow">
+    
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,14">
+            <TextBlock Text="aql.KeyFlip" 
+                       FontSize="18" 
+                       FontWeight="Bold" 
+                       Foreground="{StaticResource TextPrimaryBrush}" 
+                       HorizontalAlignment="Center"/>
+            <TextBlock Text="Keyboard Layout Converter" 
+                       FontSize="11" 
+                       Foreground="{StaticResource PrimarySkyBrush}" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,2,0,0"/>
+        </StackPanel>
+
+        <!-- Status Card -->
+        <Border Grid.Row="1" 
+                Background="{StaticResource CardBackgroundBrush}" 
+                BorderBrush="{StaticResource BorderBrush}" 
+                BorderThickness="1" 
+                CornerRadius="8" 
+                Padding="12,10"
+                Margin="0,0,0,14">
+            <StackPanel>
+                <!-- Status Row -->
+                <DockPanel Margin="0,0,0,6">
+                    <TextBlock Text="Status:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="12" VerticalAlignment="Center"/>
+                    <Button Name="StatusToggleButton" 
+                            Click="OnToggleStatusClick"
+                            DockPanel.Dock="Right" 
+                            HorizontalAlignment="Right"
+                            Padding="8,2" 
+                            Background="#064E3B" 
+                            BorderBrush="#047857" 
+                            Foreground="{StaticResource SuccessGreenBrush}"
+                            FontWeight="SemiBold"
+                            FontSize="11">
+                        ● Running
+                    </Button>
+                </DockPanel>
+
+                <!-- Shortcut Row -->
+                <DockPanel Margin="0,0,0,6">
+                    <TextBlock Text="Shortcut:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="12" VerticalAlignment="Center"/>
+                    <TextBlock Name="ShortcutTextBlock" 
+                               Text="Ctrl + K" 
+                               DockPanel.Dock="Right" 
+                               HorizontalAlignment="Right" 
+                               Foreground="{StaticResource PrimarySkyBrush}" 
+                               FontFamily="Consolas" 
+                               FontWeight="Bold" 
+                               FontSize="12" 
+                               VerticalAlignment="Center"/>
+                </DockPanel>
+
+                <!-- Mode Row -->
+                <DockPanel>
+                    <TextBlock Text="Mode:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="12" VerticalAlignment="Center"/>
+                    <ComboBox Name="ModeComboBox" 
+                              DockPanel.Dock="Right" 
+                              HorizontalAlignment="Right" 
+                              Width="130" 
+                              FontSize="11"
+                              SelectionChanged="OnModeSelectionChanged">
+                        <ComboBoxItem Content="Auto" IsSelected="True"/>
+                        <ComboBoxItem Content="English → Arabic"/>
+                        <ComboBoxItem Content="Arabic → English"/>
+                    </ComboBox>
+                </DockPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- 4 Action Buttons -->
+        <Grid Grid.Row="2" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Convert Button -->
+            <Button Grid.Row="0" Grid.Column="0" 
+                    Name="ConvertButton" 
+                    Click="OnConvertClick"
+                    Background="{StaticResource PrimarySkyBrush}" 
+                    BorderBrush="{StaticResource PrimarySkyHoverBrush}" 
+                    Foreground="White" 
+                    FontWeight="Bold">
+                Convert
+            </Button>
+
+            <!-- Settings Button -->
+            <Button Grid.Row="0" Grid.Column="2" 
+                    Name="SettingsButton" 
+                    Click="OnSettingsClick"
+                    FontWeight="SemiBold">
+                Settings
+            </Button>
+
+            <!-- About Button -->
+            <Button Grid.Row="2" Grid.Column="0" 
+                    Name="AboutButton" 
+                    Click="OnAboutClick"
+                    Foreground="{StaticResource TextSecondaryBrush}">
+                About
+            </Button>
+
+            <!-- Contact Button -->
+            <Button Grid.Row="2" Grid.Column="2" 
+                    Name="ContactButton" 
+                    Click="OnContactClick"
+                    Foreground="{StaticResource TextSecondaryBrush}">
+                Contact
+            </Button>
+        </Grid>
+
+        <!-- Footer -->
+        <DockPanel Grid.Row="3">
+            <TextBlock Text="Type Wrong. Flip. Continue." 
+                       FontSize="10" 
+                       Foreground="{StaticResource TextMutedBrush}" 
+                       VerticalAlignment="Center"/>
+            <Button DockPanel.Dock="Right" 
+                    HorizontalAlignment="Right" 
+                    Background="Transparent" 
+                    BorderThickness="0" 
+                    Padding="4,0" 
+                    FontSize="10" 
+                    Foreground="{StaticResource TextMutedBrush}"
+                    Click="OnMinimizeToTrayClick">
+                Hide to Tray ▾
+            </Button>
+        </DockPanel>
+    </Grid>
+</Window>

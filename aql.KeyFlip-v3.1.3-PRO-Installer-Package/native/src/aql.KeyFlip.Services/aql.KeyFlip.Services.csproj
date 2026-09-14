@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>aql.KeyFlip.Services</AssemblyName>
+    <RootNamespace>aql.KeyFlip.Services</RootNamespace>
+    <Version>3.1.3</Version>
+    <Authors>Eng. Ahmed Salah Aql</Authors>
+    <Company>AQL</Company>
+    <Product>aql.KeyFlip</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\aql.KeyFlip.Core\aql.KeyFlip.Core.csproj" />
+    <ProjectReference Include="..\aql.KeyFlip.Windows\aql.KeyFlip.Windows.csproj" />
+  </ItemGroup>
+
+</Project>
