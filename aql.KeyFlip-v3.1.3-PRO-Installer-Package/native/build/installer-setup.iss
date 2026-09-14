@@ -8,6 +8,7 @@
 #define MyAppPublisher "AQL (Eng. Ahmed Salah Aql)"
 #define MyAppURL "https://ahmedaql.online"
 #define MyAppExeName "aql.KeyFlip.exe"
+
 #define InstallerAssets "..\assets\installer"
 #define LogoFile "..\assets\logo\aql.KeyFlip.ico"
 
@@ -16,6 +17,7 @@ AppId={{D37D15E8-4BA6-4B4B-91BC-3BCDE7C5B56A}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
+
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -41,10 +43,10 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 
 OutputBaseFilename=aql.KeyFlip Setup
+OutputDir=..\dist-installer
+
 Compression=lzma2/ultra64
 SolidCompression=yes
-
-OutputDir=..\dist-installer
 
 PrivilegesRequired=admin
 ChangesAssociations=no
@@ -53,13 +55,18 @@ ChangesAssociations=no
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "Create a desktop shortcut"; GroupDescription: "Shortcuts:"
-Name: "startup"; Description: "Start aql.KeyFlip with Windows"; GroupDescription: "Windows integration:"
+Name: "desktopicon"; \
+    Description: "Create a desktop shortcut"; \
+    GroupDescription: "Shortcuts:"
+
+Name: "startup"; \
+    Description: "Start aql.KeyFlip with Windows"; \
+    GroupDescription: "Windows integration:"
 
 [Files]
-; The GitHub Actions workflow publishes the application here:
-; native/build/publish/aql.KeyFlip.exe
-Source: "publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\dist-release\{#MyAppExeName}"; \
+    DestDir: "{app}"; \
+    Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; \
@@ -68,7 +75,7 @@ Name: "{autoprograms}\{#MyAppName}"; \
 
 Name: "{autodesktop}\{#MyAppName}"; \
     Filename: "{app}\{#MyAppExeName}"; \
-    IconFilename: "{app}\{MyAppExeName}"; \
+    IconFilename: "{app}\{#MyAppExeName}"; \
     Tasks: desktopicon
 
 Name: "{userstartup}\{#MyAppName}"; \
@@ -94,8 +101,8 @@ var
   Img: TBitmapImage;
 begin
   Img := TBitmapImage.Create(Page);
-  Img.Parent := Page.Surface;
 
+  Img.Parent := Page.Surface;
   Img.Left := 0;
   Img.Top := 0;
   Img.Width := Page.SurfaceWidth;
@@ -110,8 +117,8 @@ var
   Txt: TNewStaticText;
 begin
   Txt := TNewStaticText.Create(Page);
-  Txt.Parent := Page.Surface;
 
+  Txt.Parent := Page.Surface;
   Txt.Left := 8;
   Txt.Top := 322;
   Txt.Width := Page.SurfaceWidth - 16;
@@ -160,10 +167,9 @@ var
   WhatsAppButton: TNewButton;
   EmailButton: TNewButton;
 begin
-
   WhatsAppButton := TNewButton.Create(Page);
-  WhatsAppButton.Parent := Page.Surface;
 
+  WhatsAppButton.Parent := Page.Surface;
   WhatsAppButton.Left := Page.SurfaceWidth div 2 - 150;
   WhatsAppButton.Top := 382;
   WhatsAppButton.Width := 135;
@@ -172,9 +178,10 @@ begin
   WhatsAppButton.Caption := 'WhatsApp';
   WhatsAppButton.OnClick := @OpenWhatsApp;
 
-  EmailButton := TNewButton.Create(Page);
-  EmailButton.Parent := Page.Surface;
 
+  EmailButton := TNewButton.Create(Page);
+
+  EmailButton.Parent := Page.Surface;
   EmailButton.Left := Page.SurfaceWidth div 2 + 15;
   EmailButton.Top := 382;
   EmailButton.Width := 135;
@@ -182,15 +189,14 @@ begin
 
   EmailButton.Caption := 'Email';
   EmailButton.OnClick := @OpenEmail;
-
 end;
 
 procedure InitializeWizard;
 begin
 
-  { ============================================================
-    Page 1 - Product introduction
-    ============================================================ }
+  { ================================================================
+    Page 1 - Product Introduction
+    ================================================================ }
 
   IntroPage := CreateCustomPage(
     wpWelcome,
@@ -205,14 +211,14 @@ begin
 
   AddFooter(
     IntroPage,
-    'A lightweight native Windows utility that fixes text typed with the wrong keyboard layout.  ' +
+    'A lightweight native Windows utility that fixes text typed with the wrong keyboard layout. ' +
     'Designed for Windows 10/11 x64 and ready to work quietly from the system tray.'
   );
 
 
-  { ============================================================
-    Page 2 - How it works
-    ============================================================ }
+  { ================================================================
+    Page 2 - How It Works
+    ================================================================ }
 
   HowPage := CreateCustomPage(
     IntroPage.ID,
@@ -227,15 +233,15 @@ begin
 
   AddFooter(
     HowPage,
-    'Select the text, press Ctrl + K, and continue typing.  ' +
+    'Select the text, press Ctrl + K, and continue typing. ' +
     'The shortcut uses the same physical key in English and Arabic layouts, ' +
     'so it stays familiar wherever you work.'
   );
 
 
-  { ============================================================
+  { ================================================================
     Page 3 - Features
-    ============================================================ }
+    ================================================================ }
 
   FeaturesPage := CreateCustomPage(
     HowPage.ID,
@@ -250,15 +256,14 @@ begin
 
   AddFooter(
     FeaturesPage,
-    'Offline by design • No cloud dependency • No keylogger • Global hotkey • ' +
-    'System tray • Safe clipboard handling • Auto / English→Arabic / ' +
-    'Arabic→English modes.'
+    'Offline by design - No cloud dependency - No keylogger - Global hotkey - ' +
+    'System tray - Safe clipboard handling - Auto / English to Arabic / Arabic to English modes.'
   );
 
 
-  { ============================================================
+  { ================================================================
     Page 4 - Developer / Contact
-    ============================================================ }
+    ================================================================ }
 
   DeveloperPage := CreateCustomPage(
     FeaturesPage.ID,
@@ -273,9 +278,10 @@ begin
 
   AddFooter(
     DeveloperPage,
-    'Eng. Ahmed Salah Aql • AQL — Building Ideas Into Software' +
-    #13#10 +
-    'WhatsApp: 01098486663    •    Email: info@ahmedaql.online'
+    'Eng. Ahmed Salah Aql - AQL - Building Ideas Into Software' +
+    Chr(13) +
+    Chr(10) +
+    'WhatsApp: 01098486663    -    Email: info@ahmedaql.online'
   );
 
   AddContactButtons(DeveloperPage);
